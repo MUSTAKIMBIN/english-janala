@@ -29,9 +29,13 @@ const displayWords = (words) => {
     console.log(word);
     wordDiv.innerHTML = `
     <div class="bg-white text-center rounded-lg shadow-sm p-6">
-          <h2 class="text-xl font-bold">${word.word}</h2>
+          <h2 class="text-xl font-bold">${
+            word.word ? word.word : "word not found"
+          }</h2>
           <p class="text-sm font-semibold my-2">Meaning /Pronounciation</p>
-          <p class="text-xl font-semibold bangla-font">"${word.meaning} / ${word.pronunciation}"</p>
+          <p class="text-xl font-semibold bangla-font">"${
+            word.meaning ? word.meaning : "no word found"
+          } / ${word.pronunciation ? word.pronunciation : "no word found"}"</p>
           <div class="flex justify-between">
             <button><i class="fa-solid fa-circle-info"></i></button>
             <button><i class="fa-solid fa-volume-low"></i></button>
