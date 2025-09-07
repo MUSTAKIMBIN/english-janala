@@ -148,6 +148,14 @@
           class="flex gap-3 justify-center flex-wrap my-5"
         ></div>
       </section>
+
+      <!-- spinner section -->
+      <section
+        id="spinner"
+        class="flex items-center justify-center py-10 hidden"
+      >
+        <span class="loading loading-spinner text-warning text-5xl"></span>
+      </section>
       <!-- word section -->
       <section
         id="word-section"
@@ -160,6 +168,19 @@
           </p>
         </div>
       </section>
+      <!-- Open the modal using ID.showModal() method -->
+      <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+      <dialog id="my_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+          <div id="word-detail" class="space-y-2"></div>
+          <div class="modal-action">
+            <form method="dialog">
+              <!-- if there is a button in form, it will close the modal -->
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </main>
     <!-- javascript file -->
     <script src="index.js"></script>

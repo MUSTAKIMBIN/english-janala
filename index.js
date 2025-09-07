@@ -4,6 +4,22 @@ const loadLessons = () => {
     .then((data) => displayLesson(data.data));
 };
 
+const manageSpinner = (status) => {
+  if (status) {
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("word-section").classList.add("hidden");
+  } else {
+    document.getElementById("spinner").classList.add("hidden");
+    document.getElementById("word-section").classList.remove("hidden");
+  }
+};
+
+// synoname function
+const displaySynoname = (arr) => {
+  const synonames = arr.map((el) => `<span class="btn" >${el}</span>`);
+  return synonames.join(" ");
+};
+
 const reomveActive = () => {
   const reomveActive = document.querySelectorAll(".lesson-btn");
   // console.log(reomveActive);
@@ -13,6 +29,7 @@ const reomveActive = () => {
 };
 // load Word cards
 const loadWords = (level) => {
+  manageSpinner(true);
   fetch(`https://openapi.programming-hero.com/api/level/${level}`)
     .then((res) => res.json())
     .then((data) => {
@@ -51,13 +68,40 @@ const displayWords = (words) => {
             word.meaning ? word.meaning : "no word found"
           } / ${word.pronunciation ? word.pronunciation : "no word found"}"</p>
           <div class="flex justify-between">
-            <button><i class="fa-solid fa-circle-info"></i></button>
+            <button onclick="showWrodDetail(${
+              word.id
+            })"><i class="fa-solid fa-circle-info"></i></button>
             <button><i class="fa-solid fa-volume-low"></i></button>
           </div>
         </div>
     `;
     wordSection.appendChild(wordDiv);
   });
+  manageSpinner(false);
+};
+// show word detail
+const showWrodDetail = (wordId) => {
+  const url = `https://openapi.programming-hero.com/api/word/${wordId}`;
+  console.log(url);
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayWordDetails(data.data));
+};
+
+// display word details
+const displayWordDetails = (detail) => {
+  const wordDetail = document.getElementById("word-detail");
+  wordDetail.innerHTML = ` 
+  <h2 class="text-2xl font-bold">${detail.word} ( ${detail.pronunciation} )</h2>
+            <p class="text-lg font-semibold">Meaning</p>
+            <p class="text-sm font-semibold">${detail.meaning}</p>
+            <p class="text-lg font-semibold">Example</p>
+            <p class="text-sm font-semibold">${detail.sentence}</p>
+            <p class="text-lg font-bold">সমার্থক শব্দ গুলো</p>
+            <div>${displaySynoname(detail.synonyms)}</div>
+  `;
+  document.getElementById("my_modal").showModal();
+  console.log(detail);
 };
 
 const displayLesson = (lessons) => {
